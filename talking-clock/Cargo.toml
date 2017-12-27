@@ -1,0 +1,8 @@
+[package]
+name = "talking-clock"
+version = "0.1.0"
+authors = ["Sudarshan <sudar.theone@gmail.com>"]
+
+[dependencies]
+
+text_io = "*"
