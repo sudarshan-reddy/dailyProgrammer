@@ -28,7 +28,7 @@
 #![feature(slice_patterns)]
 #[macro_use]
 extern crate text_io;
-use std::str;
+use std::{fmt, str};
 
 #[derive(Debug)]
 struct Time {
@@ -57,10 +57,16 @@ impl str::FromStr for Time {
     }
 }
 
+impl fmt::Display for Time {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "({}, {})", self.hour, self.min)
+    }
+}
+
 fn main() {
     loop {
         let i: String = read!();
-        let val = i.trim().parse::<Time>();
-        println!("{:?}", val)
+        let val: Time = i.trim().parse::<Time>().ok().unwrap();
+        println!("{}", val);
     }
 }
