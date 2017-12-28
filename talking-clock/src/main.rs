@@ -36,6 +36,8 @@ struct Time {
     min: u8,
 }
 
+
+
 impl str::FromStr for Time {
     type Err = String;
 
@@ -59,9 +61,30 @@ impl str::FromStr for Time {
 
 impl fmt::Display for Time {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "({}, {})", self.hour, self.min)
+        fn to_words(time: &Time) -> &'static str {
+            let hour_in_words = match time.hour {
+                0 | 12 => "Twelve",
+                23 | 11 => "Eleven",
+                22 | 10 => "Ten",
+                21 | 9 => "Nine",
+                20 | 8 => "Eight",
+                19 | 7 => "Seven",
+                18 | 6 => "Six",
+                17 | 5 => "Five",
+                16 | 4 => "Four",
+                15 | 3 => "Three",
+                14 | 2 => "Two",
+                13 | 1 => "One",
+                _ => unreachable!(),
+            };
+            hour_in_words
+        }
+
+        write!(f, "({}, {})", to_words(self), self.min)
     }
 }
+
+
 
 fn main() {
     loop {
