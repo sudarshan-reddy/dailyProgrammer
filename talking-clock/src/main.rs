@@ -61,7 +61,7 @@ impl str::FromStr for Time {
 
 impl fmt::Display for Time {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        fn to_words(time: &Time) -> &'static str {
+        fn to_words(time: &Time) -> String {
             let hour_in_words = match time.hour {
                 0 | 12 => "Twelve",
                 23 | 11 => "Eleven",
@@ -77,7 +77,49 @@ impl fmt::Display for Time {
                 13 | 1 => "One",
                 _ => unreachable!(),
             };
-            hour_in_words
+
+            fn min_in_words(time: &Time) -> String {
+                let teen = match time.min {
+                    10 => "Ten",
+                    11 => "Eleven",
+                    12 => "Twelve",
+                    13 => "Thirteen",
+                    14 => "Fourteen",
+                    15 => "Fifteen",
+                    16 => "Sixteen",
+                    17 => "Seventeen",
+                    18 => "Eighteen",
+                    19 => "Nineteen",
+                    _ => "",
+                };
+
+                let lhs = match time.min / 10 {
+                    0 => "Oh ",
+                    2 => "Twenty ",
+                    3 => "Thirty ",
+                    4 => "Forty ",
+                    5 => "Fifty ",
+
+                    _ => "",
+                };
+
+                let rhs = match time.min % 10 {
+                    1 => "One",
+                    2 => "Two",
+                    3 => "Three",
+                    4 => "Four",
+                    5 => "Five",
+                    6 => "Six",
+                    7 => "Seven",
+                    8 => "Eight",
+                    9 => "Nine",
+
+                    _ => "",
+                };
+
+                format!("{} {} {}", lhs, rhs, teen)
+            }
+            format!("{} {}", hour_in_words, min_in_words(time))
         }
 
         write!(f, "({}, {})", to_words(self), self.min)
