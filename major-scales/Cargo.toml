@@ -1,0 +1,6 @@
+[package]
+name = "major-scales"
+version = "0.1.0"
+authors = ["Sudarshan <sudar.theone@gmail.com>"]
+
+[dependencies]
