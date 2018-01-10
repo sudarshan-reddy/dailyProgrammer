@@ -53,6 +53,7 @@ mod what_day {
             let m = month;
             let k = year % 100;
             let j = year / 100;
+            // source : https://en.wikipedia.org/wiki/Zeller%27s_congruence
             let h = (q + (13 * (m + 1) / 5) + k + (k / 4) + (j / 4) + (5 * j)) % 7;
             self.dayrange.iter().find(|&s| s.0 == h).unwrap().1
         }
